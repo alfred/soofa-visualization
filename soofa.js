@@ -37,10 +37,33 @@ $( document ).ready(function() {
     foodRequest,
     liquorRequest
     ]).then(function(results) {
+      
       foodAndDrinkMasterData = results[0];
+      filteredFoodAndDrink = foodAndDrinkMasterData;
       liquorMasterData = results[1];
-      console.log('Food: ' + foodAndDrinkMasterData.length);
-      console.log('Liquor: ' + liquorMasterData.length);
+      
+      _.each(liquorMasterData, function(liqLic) {
+        var possibleCombined = _.findWhere(foodAndDrinkMasterData, {
+          address : liqLic.address,
+          businessname : liqLic.businessname
+        });
+        if (possibleCombined !== "undefined") {
+          var combinedThing = combineLiquorAndFood(liqLic, possibleCombined);
+          this.push(combinedThing)
+          filteredFoodAndDrink.splice(_.indexOf(possibleCombined), 1)
+        } else {
+          filteredLiquor.push(liqLic);
+        }
+      }, combinedMaster);
+
+      console.log(_.size(combinedMaster));
     });
 
+    var combineLiquorAndFood = function(liqour, food) {
+      var combinedResult = {
+
+      };
+
+      return combinedResult;
+    }
 });
