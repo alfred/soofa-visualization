@@ -13,32 +13,34 @@ $( document ).ready(function() {
 
   var foodAndDrinkMasterData = [];
   var liquorMasterData = [];
+  var combinedMaster = [];
+  var filteredFoodAndDrink = [];
+  var filteredLiquor = [];
 
-  $.ajax({
+  var foodRequest = $.ajax({
     url : foodAndDrinkURL + '$select=' + foodAndDrinkFields.join(',') + '&$limit=50000',
     headers : {
       'X-App-Token' : 'EdLXexUcLapLGwvyfe62eHoS8'
     },
-    method : 'GET',
-
-  }).done(function(data) {
-    // foodAndDrinkMasterData = data;
-    console.log('Food: ' + data.length);
+    method : 'GET'
   });
 
-  $.ajax({
+  var liquorRequest = $.ajax({
     url : liqURL + '$select=' + liqFields.join(',') + '&$limit=50000',
     headers : {
       'X-App-Token' : 'EdLXexUcLapLGwvyfe62eHoS8'
     },
     method : 'GET'
-  }).done(function(data) {
-    console.log('Liquor: ' + data.length);
   });
-    // console.log( "ready!" );
 
-    // var newArray = _.map(array, function(number) {
-    //   return number * 2;
-    // });
+  Q.all([
+    foodRequest,
+    liquorRequest
+    ]).then(function(results) {
+      foodAndDrinkMasterData = results[0];
+      liquorMasterData = results[1];
+      console.log('Food: ' + foodAndDrinkMasterData.length);
+      console.log('Liquor: ' + liquorMasterData.length);
+    });
 
 });
