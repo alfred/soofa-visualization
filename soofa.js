@@ -36,7 +36,7 @@ $( document ).ready(function() {
   $('#datepicker').datepicker();
   $('#dateipicker').on("changeDate", function() {
       $('#my_hidden_input').val(
-          $('#datepicker').datepicker('getFormattedDate')
+          console.lo$('#datepicker').datepicker('getFormattedDate')
       );
   });
 
@@ -72,7 +72,7 @@ $( document ).ready(function() {
     var combineLiquorAndFood = function(liqour, food) {
       var combinedResult = {
         address : liqour.address,
-        businessname : liqour.businessname,
+        businessname : food.businessname,
         city : liqour.city,
         zip : liqour.city,
         foodLicStatus : food.licstatus,
