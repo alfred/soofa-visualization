@@ -9,7 +9,7 @@ $( document ).ready(function() {
   };
 
   var foodAndDrinkFields = ['businessname', 'address', 'zip', 'licstatus', 'licenseadddttm', 'dayphn'];
-  var liqFields = ['address', 'businessname', 'comments','opening', 'closing', 'expdttm', 'issdttm', 'licstatus', 'liccat', 'zip'];
+  var liqFields = ['address', 'dbaname', 'businessname', 'comments','opening', 'closing', 'expdttm', 'issdttm', 'licstatus', 'liccat', 'zip'];
 
   var foodAndDrinkMasterData = [];
   var liquorMasterData = [];
@@ -43,14 +43,14 @@ $( document ).ready(function() {
       liquorMasterData = results[1];
       
       _.each(liquorMasterData, function(liqLic) {
-        var possibleCombined = _.findWhere(foodAndDrinkMasterData, {
-          address : liqLic.address,
-          businessname : liqLic.businessname
+        // This runs slow as hell, should be sort + binary search
+        var possibleMatch = _.find(foodAndDrinkMasterData, function(foodPlace) {
+          return matchLiquorAndFood(liqLic, foodPlace);
         });
-        if (possibleCombined !== "undefined") {
-          var combinedThing = combineLiquorAndFood(liqLic, possibleCombined);
-          this.push(combinedThing)
-          filteredFoodAndDrink.splice(_.indexOf(possibleCombined), 1)
+        if (possibleMatch !== undefined) {
+          var combined = combineLiquorAndFood(liqLic, possibleMatch);
+          this.push(combined)
+          filteredFoodAndDrink.splice(_.indexOf(possibleMatch), 1)
         } else {
           filteredLiquor.push(liqLic);
         }
@@ -61,9 +61,24 @@ $( document ).ready(function() {
 
     var combineLiquorAndFood = function(liqour, food) {
       var combinedResult = {
-
+        address : liqour.address,
+        businessname : liqour.businessname,
+        city : liqour.city,
+        zip : liqour.city,
+        foodLicStatus : food.licstatus,
+        licenseadddttm : food.licenseadddttm,
+        dayphn : food.dayphn,
+        liquorLicStatus : liqour.licstatus,
+        expdttm : liqour.expdttm,
+        issdttm : liqour.issdttm,
+        liccat : liqour.liccat
       };
 
       return combinedResult;
+    }
+
+    var matchLiquorAndFood = function (liq, food) {
+      return ((liq.dbaname.toLowerCase() == food.businessname.toLowerCase()) &&
+            (liq.zip == food.zip) && (liq.city == food.city));
     }
 });
