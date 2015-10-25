@@ -57,6 +57,8 @@ $( document ).ready(function() {
       }, combinedMaster);
 
       console.log(_.size(combinedMaster));
+      console.log(_.size(filteredLiquor));
+      console.log(_.size(filteredFoodAndDrink));
     });
 
     var combineLiquorAndFood = function(liqour, food) {

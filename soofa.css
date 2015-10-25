@@ -1,4 +1,18 @@
+html, body {
+  height: 100%; }
+
 body {
-  padding-top: 70px; }
+  padding-top: 50px; }
+
+.sidefilters {
+  border-left: 1px solid grey; }
+
+.licenses, .sidefilters {
+  margin-bottom: -9999px;
+  padding-bottom: 9999px; }
+
+.container-fluid {
+  min-height: 100%;
+  overflow: hidden; }
 
 /*# sourceMappingURL=soofa.css.map */
