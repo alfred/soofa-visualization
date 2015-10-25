@@ -33,6 +33,14 @@ $( document ).ready(function() {
     method : 'GET'
   });
 
+  $('#datepicker').datepicker();
+  $('#dateipicker').on("changeDate", function() {
+      $('#my_hidden_input').val(
+          $('#datepicker').datepicker('getFormattedDate')
+      );
+  });
+
+  // Wouldn't do this for massive datasets, pagination is optimization though
   Q.all([
     foodRequest,
     liquorRequest
