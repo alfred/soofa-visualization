@@ -34,9 +34,10 @@ $( document ).ready(function() {
   });
 
   $('#datepicker').datepicker();
+  // Set the date to today.
   $('#dateipicker').on("changeDate", function() {
       $('#my_hidden_input').val(
-          console.lo$('#datepicker').datepicker('getFormattedDate')
+          console.log$('#datepicker').datepicker('getFormattedDate')
       );
   });
 
@@ -91,4 +92,75 @@ $( document ).ready(function() {
       return ((liq.dbaname.toLowerCase() == food.businessname.toLowerCase()) &&
             (liq.zip == food.zip) && (liq.city == food.city));
     }
+
+    var readFilters = function() {
+      switch (selectedType) {
+        case 'Food Only':
+          render(filteredFoodAndDrink, 'food');
+          break;
+        case 'Liquor Only':
+          render(filteredLiquor, 'liq');
+          break;
+        default:
+          render(combinedMaster, 'both');
+          render(filteredFoodAndDrink, 'food');
+          render(filteredLiquor, 'liq');
+      }
+    };
+
+    var render = function(array, type) {
+      _.each(array, function(store) {
+        switch(type {
+          case 'food':
+            drawFood(store);
+            break;
+          case 'liq':
+            drawLiquor(store);
+            break;
+          case 'both':
+            drawCombo(store);
+            break;
+          default:
+            console.err("This error should never come up, maybe use if here.");
+        })
+      });
+    };
+
+    var drawFood = function(foodPlace) {
+      var $licenseBody = $('.licenses.col-md-9 > .row');
+      var selectedType = $('#license-type-filter').find(':selected').text();
+      var selectedDate = new Date($('#datepicker').datepicker('getDate'));
+      var selectedDateMap = {
+        year : selectedDate.getYear() + 1900,
+        month : selectedDate.getMonth() + 1,
+        day : selectedDate.getDate()
+      };
+
+      var placeDateUnFormatted = foodPlace.licenseadddttm.substring(0, 10);
+      var placeDateMap = {
+        year : parseInt(placeDateUnFormatted.substring(0, 4)),
+        month : parseInt(placeDateUnFormatted.substring(5, 7)),
+        day : parseInt(placeDateUnFormatted.substring(8, 10))
+      };
+
+      var isLicensed = hasActiveFoodLicense(placeDateMap, selectedDateMap);
+      var licensedGlyph = if (isLicensed) ? 'ok' : 'remove';
+
+      var $panelElement = $('<div class="col-md-4"><div class="panel panel-default">'
+        + '<div class="panel-heading"><h3 class="panel-title">' + foodPlace.businessname 
+        + '</h3></div><div class="panel-body"><address>' + foodPlace.address
+        + '<br/>' + foodPlace.city + ', MA ' + foodPlace.zip
+        + '<br/></address>Food License? <span class="glyphicon glyphicon-' + licensedGlyph
+        + '" aria-hidden="true"></span><p class="license-date">Issued on: <span aria-hidden="true">'
+        + placeDateMap.month + '-' placeDateMap.day + '-' placeDateMap.year + '</span></p>'
+        + '</div></div></div>');
+    };
+
+    var hasActiveFoodLicense = function(placeDateMap, currentDateMap) {
+      return ((placeDateMap.year < currentDateMap.year) ||
+        ((placeDateMap.year === currentDateMap.year) && (placeDateMap.month < currentDateMap.month)) ||
+        ((placeDateMap.year === currentDateMap.year) && (placeDateMap.month === currentDateMap.month) && (placeDateMap.day < currentDateMap.day)));
+    };
+
+
 });
