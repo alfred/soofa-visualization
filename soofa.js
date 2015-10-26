@@ -9,7 +9,7 @@ $( document ).ready(function() {
   };
 
   var foodAndDrinkFields = ['businessname', 'address', 'zip', 'licstatus', 'licenseadddttm', 'dayphn'];
-  var liqFields = ['address', 'dbaname', 'businessname', 'comments','opening', 'closing', 'expdttm', 'issdttm', 'licstatus', 'liccat', 'zip', 'city'];
+  var liqFields = ['address', 'dbaname', 'businessname','opening', 'closing', 'expdttm', 'issdttm', 'licstatus', 'liccat', 'zip', 'city'];
 
   var foodAndDrinkMasterData = [];
   var liquorMasterData = [];
@@ -39,7 +39,6 @@ $( document ).ready(function() {
       readFilters();
     });
   // Set the date to today.
-  // $('#dateipicker').datepicker()
 
   // Wouldn't do this for massive datasets, pagination is optimization though
   Q.all([
@@ -90,7 +89,7 @@ $( document ).ready(function() {
 
     var matchLiquorAndFood = function (liq, food) {
       return ((liq.dbaname.toLowerCase() == food.businessname.toLowerCase()) &&
-            (liq.zip == food.zip) && (liq.city == food.city));
+            (liq.zip == food.zip));
     }
 
     var readFilters = function() {
@@ -192,7 +191,7 @@ $( document ).ready(function() {
 
       var $panelElement = $('<div class="col-md-4"><div class="panel panel-default">'
         + '<div class="panel-heading"><h3 class="panel-title">' + liqPlace.businessname 
-        + '</h3></div></div class="panel-body"><address>' + liqPlace.address
+        + '</h3></div><div class="panel-body"><address>' + liqPlace.address
         + '<br/>' + liqPlace.city + ', MA ' + liqPlace.zip + '<br/></address>'
         + menuSelections + '<p class="license-date">Issued on: <span aria-hidden="true">'
         + placeStartDateMap.month + '-' + placeStartDateMap.day + '-' + placeStartDateMap.year
