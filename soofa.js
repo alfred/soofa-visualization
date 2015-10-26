@@ -172,14 +172,14 @@ $( document ).ready(function() {
         day : selectedDate.getDate()
       };
 
-      var placeStartDateUnFormatted = liqPlace.issdttm.substring(0, 10);
+      var placeStartDateUnFormatted = (liqPlace.issdttm) ? liqPlace.issdttm.substring(0, 10) : '0000000000000000';
       var placeStartDateMap = {
         year : parseInt(placeStartDateUnFormatted.substring(0, 4)),
         month : parseInt(placeStartDateUnFormatted.substring(5, 7)),
         day : parseInt(placeStartDateUnFormatted.substring(8, 10))
       };
 
-      var placeEndDateUnFormatted = liqPlace.expdttm.substring(0, 10);
+      var placeEndDateUnFormatted = (liqPlace.expdttm) ? liqPlace.expdttm.substring(0, 10) : '0000000000000';
       var placeEndDateMap = {
         year : parseInt(placeEndDateUnFormatted.substring(0, 4)),
         month : parseInt(placeEndDateUnFormatted.substring(5, 7)),
@@ -219,14 +219,14 @@ $( document ).ready(function() {
       var isFoodLicensed = hasActiveFoodLicense(comboFoodDateMap, selectedDateMap);
       var foodLicensedGlyph = (isFoodLicensed) ? 'ok' : 'remove';
 
-      var comboLiqIssueUnFormatted = comboPlace.issdttm.substring(0, 10);
+      var comboLiqIssueUnFormatted = (comboPlace.issdttm) ? comboPlace.issdttm.substring(0, 10) : '0000000000';
       var comboLiqIssueMap = {
         year : parseInt(comboLiqIssueUnFormatted.substring(0, 4)),
         month : parseInt(comboLiqIssueUnFormatted.substring(5, 7)),
         day : parseInt(comboLiqIssueUnFormatted.substring(8, 10))
       };
 
-      var comboLiqExpUnFormatted = comboPlace.expdttm.substring(0, 10);
+      var comboLiqExpUnFormatted = (comboPlace.expdttm) ? comboPlace.expdttm.substring(0, 10) : '0000000000';
       var comboLiqExpMap = {
         year : parseInt(comboLiqExpUnFormatted.substring(0, 4)),
         month : parseInt(comboLiqExpUnFormatted.substring(5, 7)),
