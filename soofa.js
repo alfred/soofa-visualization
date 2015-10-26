@@ -38,6 +38,10 @@ $( document ).ready(function() {
     .on('changeDate', function(e) {
       readFilters();
     });
+
+  $('#license-type-filter').change(function(e) {
+    readFilters();
+  });
   // Set the date to today.
 
   // Wouldn't do this for massive datasets, pagination is optimization though
@@ -117,6 +121,9 @@ $( document ).ready(function() {
       });
       // console.log("Shit Removed");
     }
+
+    // This takes forever, jQuery is slow.
+    // Lots of processing getting done also
     var render = function(array, type) {
       _.each(array, function(store) {
         switch(type) {
