@@ -21,3 +21,4 @@ Frontend Code Challenge from Soofa. The challenge was to combine data from the [
 * To combine a Food License and Liquor License, for places with both, I'd get the data sorted by name from the API because it supports that too, that way I could try to binary search for the matches instead of running n^2 to pair
 * Probably write a more detailed setup
 * Host it on my personal site instead of having to put it on EC2
+* Make it mobile-ready, the requirements didn't say that so I didn't want to take more time on the layout
