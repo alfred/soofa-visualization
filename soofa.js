@@ -152,12 +152,13 @@ $( document ).ready(function() {
 
       var isLicensed = hasActiveFoodLicense(placeDateMap, selectedDateMap);
       var licensedGlyph = (isLicensed) ? 'ok' : 'remove';
+      var phoneNumFormatted = foodPlace.dayphn.substring(2, 5) + '-' + foodPlace.dayphn.substring(5, 8) + '-' + foodPlace.dayphn.substring(8, 12);
 
       var $panelElement = $('<div class="col-md-4"><div class="panel panel-default">'
         + '<div class="panel-heading"><h3 class="panel-title">' + foodPlace.businessname 
         + '</h3></div><div class="panel-body"><address>' + foodPlace.address
-        + '<br/>' + foodPlace.city + ', MA ' + foodPlace.zip
-        + '<br/></address>Food License? <span class="glyphicon glyphicon-' + licensedGlyph
+        + '<br/>Boston, MA ' + foodPlace.zip
+        + '<br/>' + phoneNumFormatted + '</address>Food License? <span class="glyphicon glyphicon-' + licensedGlyph
         + '" aria-hidden="true"></span><p class="license-date">Issued on: <span aria-hidden="true">'
         + placeDateMap.month + '-' + placeDateMap.day + '-' + placeDateMap.year + '</span></p>'
         + '</div></div></div>');
@@ -235,12 +236,13 @@ $( document ).ready(function() {
 
       var isLiquorLicensed = hasActiveLiquorLicense(comboLiqIssueMap, selectedDateMap, comboLiqExpMap);
       var liqLicensedGlyph = (isLiquorLicensed) ? 'ok' : 'remove';
-      var menuSelections = getMenuSelection(comboPlace.liccat);
+      var menuSelections = (isLiquorLicensed) ? getMenuSelection(comboPlace.liccat) : '';
+      var phoneNumFormatted = comboPlace.dayphn.substring(2, 5) + '-' + comboPlace.dayphn.substring(5, 8) + '-' + comboPlace.dayphn.substring(8, 12);
 
       var $panelElement = $('<div class="col-md-4"><div class="panel panel-default">'
         + '<div class="panel-heading"><h3 class="panel-title">' + comboPlace.businessname
         + '</h3></div><div class="panel-body"><address>' + comboPlace.address
-        + '<br/>' + comboPlace.city + ', MA ' + comboPlace.zip + '<br/>'
+        + '<br/>' + comboPlace.city + ', MA ' + comboPlace.zip + '<br/>' + phoneNumFormatted
         + '</address><p class="license-date clearfix"><span class="pull-left"> Food License?'
         + '<span class="glyphicon glyphicon-' + foodLicensedGlyph + '" aria-hidden="true">'
         + '</span></span><span class="pull-right">Issued on: ' + comboFoodDateMap.month
