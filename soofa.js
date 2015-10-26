@@ -64,9 +64,9 @@ $( document ).ready(function() {
         }
       }, combinedMaster);
 
-      console.log(_.size(combinedMaster));
-      console.log(_.size(filteredLiquor));
-      console.log(_.size(filteredFoodAndDrink));
+      // console.log(_.size(combinedMaster));
+      // console.log(_.size(filteredLiquor));
+      // console.log(_.size(filteredFoodAndDrink));
     });
 
     var combineLiquorAndFood = function(liqour, food) {
@@ -115,7 +115,7 @@ $( document ).ready(function() {
       _.each($('.licenses.col-md-9 > .row').children('.col-md-4'), function($panelElm) {
         $panelElm.remove();
       });
-      console.log("Shit Removed");
+      // console.log("Shit Removed");
     }
     var render = function(array, type) {
       _.each(array, function(store) {
@@ -199,6 +199,59 @@ $( document ).ready(function() {
         + placeEndDateMap.month + '-' + placeEndDateMap.day + '-' + placeEndDateMap.year
         + '</span></p></div></div></div>');
       $licenseBody.append($panelElement);
+    };
+
+    var drawCombo = function(comboPlace) {
+      var selectedDate = new Date($('#datepicker').datepicker('getDate'));
+      var selectedDateMap = {
+        year : selectedDate.getYear() + 1900,
+        month : selectedDate.getMonth() + 1,
+        day : selectedDate.getDate()
+      };
+
+      var comboDateUnFormatted = comboPlace.licenseadddttm.substring(0, 10);
+      var comboFoodDateMap = {
+        year : parseInt(comboDateUnFormatted.substring(0, 4)),
+        month : parseInt(comboDateUnFormatted.substring(5, 7)),
+        day : parseInt(comboDateUnFormatted.substring(8, 10))
+      };
+
+      var isFoodLicensed = hasActiveFoodLicense(comboFoodDateMap, selectedDateMap);
+      var foodLicensedGlyph = (isFoodLicensed) ? 'ok' : 'remove';
+
+      var comboLiqIssueUnFormatted = comboPlace.issdttm.substring(0, 10);
+      var comboLiqIssueMap = {
+        year : parseInt(comboLiqIssueUnFormatted.substring(0, 4)),
+        month : parseInt(comboLiqIssueUnFormatted.substring(5, 7)),
+        day : parseInt(comboLiqIssueUnFormatted.substring(8, 10))
+      };
+
+      var comboLiqExpUnFormatted = comboPlace.expdttm.substring(0, 10);
+      var comboLiqExpMap = {
+        year : parseInt(comboLiqExpUnFormatted.substring(0, 4)),
+        month : parseInt(comboLiqExpUnFormatted.substring(5, 7)),
+        day : parseInt(comboLiqExpUnFormatted.substring(8, 10))
+      };
+
+      var isLiquorLicensed = hasActiveLiquorLicense(comboLiqIssueMap, selectedDateMap, comboLiqExpMap);
+      var liqLicensedGlyph = (isLiquorLicensed) ? 'ok' : 'remove';
+      var menuSelections = getMenuSelection(comboPlace.liccat);
+
+      var $panelElement = $('<div class="col-md-4"><div class="panel panel-default">'
+        + '<div class="panel-heading"><h3 class="panel-title">' + comboPlace.businessname
+        + '</h3></div><div class="panel-body"><address>' + comboPlace.address
+        + '<br/>' + comboPlace.city + ', MA ' + comboPlace.zip + '<br/>'
+        + '</address><p class="license-date clearfix"><span class="pull-left"> Food License?'
+        + '<span class="glyphicon glyphicon-' + foodLicensedGlyph + '" aria-hidden="true">'
+        + '</span></span><span class="pull-right">Issued on: ' + comboFoodDateMap.month
+        + '-' + comboFoodDateMap.day + '-' + comboFoodDateMap.year + '</span></p>'
+        + '<p class="license-date clearfix"><span class="pull-left>Liquor License?'
+        + '<span class="pull-left">Liquor License? <span class="glyphicon glyphicon-' 
+        + liqLicensedGlyph + '" aria-hidden="true"></span></span><span class="pull-right">'
+        + menuSelections + '</span></p></div></div></div>');
+
+      $licenseBody.append($panelElement);
+
     };
 
     var hasActiveFoodLicense = function(placeDateMap, currentDateMap) {
