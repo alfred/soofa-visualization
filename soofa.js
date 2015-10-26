@@ -68,6 +68,7 @@ $( document ).ready(function() {
         }
       }, combinedMaster);
 
+      readFilters();
       // console.log(_.size(combinedMaster));
       // console.log(_.size(filteredLiquor));
       // console.log(_.size(filteredFoodAndDrink));
@@ -119,6 +120,7 @@ $( document ).ready(function() {
       _.each($('.licenses.col-md-9 > .row').children('.col-md-4'), function($panelElm) {
         $panelElm.remove();
       });
+      $('#loading').remove();
       // console.log("Shit Removed");
     }
 
