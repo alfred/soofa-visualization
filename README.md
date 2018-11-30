@@ -1,3 +1,5 @@
+**Note: I did all of this in literally 8 hours (start to finish) in Fall of 2016. Trust me, I'm much better now**
+
 # soofa-visualization
 Frontend Code Challenge from Soofa. The challenge was to combine data from the [Active Food Establishment Licenses API](http://dev.socrata.com/foundry/#/data.cityofboston.gov/fdxy-gydq) and the [Liquor Licenses API](http://dev.socrata.com/foundry/#/data.cityofboston.gov/g9d9-7sj6) to allow a user to see how the licenses of these establishments have changed over time. This accomplishes this because you can view for specifically food or liquor, or both licenses, and you can choose any date to see if the establishment had an active license at the time.
 
@@ -10,7 +12,7 @@ Frontend Code Challenge from Soofa. The challenge was to combine data from the [
 6. Navigate to the page where your webserver is serving to, if the box you're using is your local go to localhost
 
 ### Things I'd Do Differently
-* jQuery is slow as hell, but I'm fast as hell at scaffolding something this small
+* jQuery is slow as hell, but its fast as hell at scaffolding something this small
 * If the data set was larger, I'd use pagination because the API supports it
 * Some fields in the dataset are missing, a lot of them I don't handle (missing names)
 * Should've used a date library for comparing dates, so much wasted time and brainpower
